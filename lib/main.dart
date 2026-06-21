@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate/core/theme/app_theme.dart';
 import 'package:real_estate/home_screen.dart';
 import 'package:real_estate/splash_screen.dart';
-import 'app_colors.dart';
 
 void main() {
   runApp(const RealState());
@@ -15,15 +15,7 @@ class RealState extends StatelessWidget {
     return MaterialApp(
       title: 'RealState',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.offWhite,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.navy,
-          primary: AppColors.navy,
-          secondary: AppColors.gold,
-        ),
-      ),
+      theme: AppTheme.darkTheme,
       home: SplashScreen(nextScreen: const HomeScreen()),
     );
   }
