@@ -15,14 +15,12 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
 
   static const _items = [
     _NavItemData(icon: Icons.home_rounded, label: "Home"),
-    _NavItemData(icon: Icons.search_rounded, label: "Search"),
     _NavItemData(icon: Icons.favorite_rounded, label: 'Saved'),
     _NavItemData(icon: Icons.chat_rounded, label: 'Messages'),
     _NavItemData(icon: Icons.person_rounded, label: 'Profile'),
   ];
   final List<Widget> _screens = const [
     HomeScreen(),
-    _PlaceholderScreen(label: 'Search'),
     _PlaceholderScreen(label: 'Saved'),
     _PlaceholderScreen(label: 'Messages'),
     ProfileScreen(),
