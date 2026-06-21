@@ -50,7 +50,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    _index = 1;
+                    _index = i;
                   });
                 },
                 child: Column(
