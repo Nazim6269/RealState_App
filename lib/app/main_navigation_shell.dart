@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:real_estate/core/theme/app_colors.dart';
 import 'package:real_estate/home_screen.dart';
 import 'package:real_estate/profile_screen.dart';
+import 'package:real_estate/saved_screen.dart';
 
 class MainNavigationShell extends StatefulWidget {
   const MainNavigationShell({super.key});
@@ -21,7 +22,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
   ];
   final List<Widget> _screens = const [
     HomeScreen(),
-    _PlaceholderScreen(label: 'Saved'),
+    SavedScreen(),
     _PlaceholderScreen(label: 'Messages'),
     ProfileScreen(),
   ];
