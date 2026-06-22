@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './core/theme/app_colors.dart';
+import '../../core/theme/app_colors.dart';
 
 class MessageScreen extends StatelessWidget {
   const MessageScreen({super.key});
