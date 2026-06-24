@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
-import './core/theme/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/error/failure.dart';
+import '../../product/presentation/state/product_list_state.dart';
+import '../../product/presentation/notifier/product_list_notifier.dart';
+import '../../product/domain/entities/product_entity.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(productListNotifierProvider);
+
+    if (state is ProductListInitial) {
+      Future.microtask(
+        () => ref.read(productListNotifierProvider.notifier).fetchProducts(),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.navyDark,
 
@@ -19,15 +32,14 @@ class HomeScreen extends StatelessWidget {
             children: [
               // Header
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
 
                     children: const [
                       Text(
-                        "Welcome Back 👋",
+                        "Welcome Back \u{1f44b}",
                         style: TextStyle(
                           color: AppColors.goldLight,
                           fontSize: 14,
@@ -46,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
+                ),
                   const CircleAvatar(
                     radius: 24,
                     backgroundColor: AppColors.gold,
@@ -64,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: "Search properties...",
                   hintStyle: TextStyle(
-                    color: AppColors.offWhite.withOpacity(0.6),
+                    color: AppColors.offWhite.withValues(alpha: 0.6),
                   ),
 
                   prefixIcon: const Icon(Icons.search, color: AppColors.gold),
@@ -130,23 +142,60 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              const PropertyCard(
-                title: "Modern Apartment",
-                location: "Dhaka, Bangladesh",
-                price: "\$1,200/month",
-              ),
-
-              const SizedBox(height: 16),
-
-              const PropertyCard(
-                title: "Luxury Villa",
-                location: "Gulshan, Dhaka",
-                price: "\$3,500/month",
-              ),
+              switch (state) {
+                ProductListLoading() => const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(32),
+                    child: CircularProgressIndicator(color: AppColors.gold),
+                  ),
+                ),
+                ProductListError(:final failure) => Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      children: [
+                        Text(
+                          failure.errorMessage,
+                          style: const TextStyle(color: AppColors.goldLight),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 12),
+                        TextButton.icon(
+                          onPressed: () => ref
+                              .read(productListNotifierProvider.notifier)
+                              .fetchProducts(),
+                          icon: const Icon(Icons.refresh, color: AppColors.gold),
+                          label: const Text(
+                            "Retry",
+                            style: TextStyle(color: AppColors.gold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ProductListSuccess(:final products) => Column(
+                  children: products
+                      .map((p) => Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: _buildProductCard(p),
+                          ))
+                      .toList(),
+                ),
+                _ => const SizedBox.shrink(),
+              },
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildProductCard(ProductEntity product) {
+    return PropertyCard(
+      title: product.title,
+      location: product.category,
+      price: "\$${product.price.toStringAsFixed(0)}/month",
     );
   }
 }
@@ -167,7 +216,7 @@ class _CategoryChip extends StatelessWidget {
         backgroundColor: AppColors.navy,
 
         shape: StadiumBorder(
-          side: BorderSide(color: AppColors.gold.withOpacity(0.4)),
+          side: BorderSide(color: AppColors.gold.withValues(alpha: 0.4)),
         ),
 
         label: Text(
@@ -203,7 +252,7 @@ class PropertyCard extends StatelessWidget {
         color: AppColors.navy,
         borderRadius: BorderRadius.circular(18),
 
-        border: Border.all(color: AppColors.gold.withOpacity(0.25)),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.25)),
       ),
 
       child: Column(

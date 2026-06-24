@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate/core/theme/app_colors.dart';
-import 'package:real_estate/features/home/home_screen.dart';
+import 'package:real_estate/features/home/presentation/home_screen.dart';
+import 'package:real_estate/features/message/message_screen.dart';
 import 'package:real_estate/features/profile/profile_screen.dart';
-import 'package:real_estate/message_screen.dart';
-import 'package:real_estate/saved_screen.dart';
+import 'package:real_estate/features/saved/saved_screen.dart';
 
 class MainNavigationShell extends StatefulWidget {
   const MainNavigationShell({super.key});

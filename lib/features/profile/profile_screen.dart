@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.navy,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.gold.withOpacity(0.3)),
+                  border: Border.all(color: AppColors.gold.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   children: [
@@ -126,7 +126,7 @@ class _ProfileTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.navy,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.2)),
       ),
       child: ListTile(
         leading: Icon(icon, color: AppColors.gold),

@@ -61,6 +61,7 @@ class SavedPropertyCard extends StatelessWidget {
   final String location;
   final String price;
   const SavedPropertyCard({
+    super.key,
     required this.title,
     required this.location,
     required this.price,
@@ -72,7 +73,7 @@ class SavedPropertyCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.navy,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.2)),
       ),
       child: Padding(
         padding: EdgeInsets.all(16),
